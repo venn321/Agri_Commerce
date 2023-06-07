@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../app_properties.dart';
 import 'welcome_back_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -159,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: transparentGreen,
+                      color: Color.fromRGBO(96, 189, 77, 0.698),
 
                     ),
                   ),

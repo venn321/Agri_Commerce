@@ -1,3 +1,5 @@
+import '../../../faq_page.dart';
+import 'welcome_back_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -6,18 +8,48 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(child: Image.asset('assets/images/profile_pic.png')),
-          const Text(
-            "Welcome Steven!",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      backgroundColor: Color(0xffF9F9F9),
+      body: SafeArea(
+        top: true,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding:
+                EdgeInsets.only(left: 16.0, right: 16.0, top: kToolbarHeight),
+            child: Column(
+              children: <Widget>[
+                CircleAvatar(
+                  maxRadius: 48,
+                  backgroundImage: AssetImage('assets/images/profile_pic.png'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Rose Helbert',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                ListTile(
+                  title: Text('FAQ'),
+                  subtitle: Text('Questions and Answer'),
+                  leading: Image.asset('assets/images/faq.png'),
+                  trailing: Icon(Icons.chevron_right, color: Color.fromRGBO(96, 189, 77, 0.698)),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => FaqPage())),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text('Log Out'),
+                  subtitle: Text('logout'),
+                  leading: Image.asset('assets/images/sign_out.png', fit: BoxFit.scaleDown, width: 30, height: 30,),
+                  trailing: Icon(Icons.chevron_right, color: Color.fromRGBO(96, 189, 77, 0.698)),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => WelcomeBackPage())),
+                ),
+                Divider(),
+              ],
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-          )
-        ],
+        ),
       ),
     );
   }
