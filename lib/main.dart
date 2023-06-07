@@ -1,7 +1,7 @@
 import 'dart:ui' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:e_commerce_flutter/core/app_theme.dart';
-import 'package:e_commerce_flutter/src/view/screen/home_screen.dart';
+import 'package:e_commerce_flutter/src/view/screen/welcome_back_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         },
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: WelcomeBackPage(),
       theme: AppTheme.lightAppTheme,
     );
   }
