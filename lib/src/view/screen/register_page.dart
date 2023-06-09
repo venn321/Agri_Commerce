@@ -130,25 +130,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
     Widget socialRegister = Column(
       children: <Widget>[
-        Text(
-          'You can sign in with',
-          style: TextStyle(
-              fontSize: 12.0, fontStyle: FontStyle.italic, color: Colors.white),
+        Center(
+          child: Text(
+            'Mayasari',
+            style: TextStyle(
+                fontSize: 12.0, fontStyle: FontStyle.italic, color: Colors.white),
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.find_replace),
-              onPressed: () {},
-              color: Colors.white,
-            ),
-            IconButton(
-                icon: Icon(Icons.find_replace),
-                onPressed: () {},
-                color: Colors.white),
-          ],
-        )
+        // Widget lainnya
       ],
     );
 
