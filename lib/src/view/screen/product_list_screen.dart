@@ -10,15 +10,20 @@ enum AppbarActionType { leading, trailing }
 
 final ProductController controller = Get.put(ProductController());
 
-class ProductListScreen extends StatelessWidget {
+TextEditingController searchController = TextEditingController();
+bool searchState = false;
+
+class ProductListScreen extends StatefulWidget {
+  @override
+  _ProductListScreenState createState() => _ProductListScreenState();
   const ProductListScreen({Key? key}) : super(key: key);
+}
 
+class _ProductListScreenState extends State<ProductListScreen> {
+  TextEditingController searchController = TextEditingController();
+  bool searchState = false;
   Widget appBarActionButton(AppbarActionType type) {
-    IconData icon = Icons.ac_unit_outlined;
-
-    if (type == AppbarActionType.trailing) {
-      icon = Icons.search;
-    }
+    IconData icon = Icons.search;
 
     return Container(
       margin: const EdgeInsets.all(8),
@@ -26,12 +31,34 @@ class ProductListScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: AppColor.lightGrey,
       ),
-      child: IconButton(
-        padding: const EdgeInsets.all(8),
-        constraints: const BoxConstraints(),
-        onPressed: () {},
-        icon: Icon(icon, color: Colors.black),
-      ),
+      child: searchState
+          ? Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(hintText: 'Masukan teks'),
+                ),
+                IconButton(
+                  padding: const EdgeInsets.all(8),
+                  constraints: const BoxConstraints(),
+                  onPressed: () {
+                    setState(() {
+                      searchState = !searchState;
+                    });
+                  },
+                  icon: Icon(icon, color: Colors.black),
+                ),
+              ],
+            )
+          : IconButton(
+              padding: const EdgeInsets.all(8),
+              constraints: const BoxConstraints(),
+              onPressed: () {
+                setState(() {
+                  searchState = !searchState;
+                });
+              },
+              icon: Icon(icon, color: Colors.black),
+            ),
     );
   }
 
@@ -44,7 +71,7 @@ class ProductListScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              appBarActionButton(AppbarActionType.leading),
+              // appBarActionButton(AppbarActionType.leading),
               appBarActionButton(AppbarActionType.trailing),
             ],
           ),
@@ -53,71 +80,70 @@ class ProductListScreen extends StatelessWidget {
     );
   }
 
-  Widget _recommendedProductListView(BuildContext context) {
-    return SizedBox(
-      height: 170,
-      child: ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: AppData.recommendedProducts.length,
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Container(
-                width: 300,
-                decoration: BoxDecoration(
-                  color: AppData.recommendedProducts[index].cardBackgroundColor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'No Discount \nDiscount make we bangkrupt',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall
-                                ?.copyWith(color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppData
-                                  .recommendedProducts[index]
-                                  .buttonBackgroundColor,
-                              elevation: 0,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 18),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                            ),
-                            child: Text(
-                              "Get Now",
-                              style: TextStyle(
-                                color: AppData.recommendedProducts[index]
-                                    .buttonTextColor!,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-              ),
-            );
-          }),
-    );
-  }
+  // Widget _recommendedProductListView(BuildContext context) {
+  //   return SizedBox(
+  //     height: 170,
+  //     child: ListView.builder(
+  //         padding: const EdgeInsets.symmetric(vertical: 10),
+  //         shrinkWrap: true,
+  //         scrollDirection: Axis.horizontal,
+  //         itemCount: AppData.recommendedProducts.length,
+  //         itemBuilder: (_, index) {
+  //           return Padding(
+  //             padding: const EdgeInsets.only(right: 20),
+  //             child: Container(
+  //               width: 300,
+  //               decoration: BoxDecoration(
+  //                 color: AppData.recommendedProducts[index].cardBackgroundColor,
+  //                 borderRadius: BorderRadius.circular(15),
+  //               ),
+  //               // child: Row(
+  //               //   children: [
+  //               //     Padding(
+  //               //       padding: const EdgeInsets.only(left: 20),
+  //               //       child: Column(
+  //               //         crossAxisAlignment: CrossAxisAlignment.start,
+  //               //         mainAxisAlignment: MainAxisAlignment.center,
+  //               //         children: [
+  //               //           Image.network(
+  //               //             "https://images.unsplash.com/photo-1484517586036-ed3db9e3749e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+  //               //             width: 200.0,
+  //               //             height: 200.0,
+  //               //             fit: BoxFit.cover,
+  //               //           ),
+  //               //           const SizedBox(height: 8),
+  //               //           ElevatedButton(
+  //               //             onPressed: () {},
+  //               //             style: ElevatedButton.styleFrom(
+  //               //               backgroundColor: AppData
+  //               //                   .recommendedProducts[index]
+  //               //                   .buttonBackgroundColor,
+  //               //               elevation: 0,
+  //               //               padding:
+  //               //                   const EdgeInsets.symmetric(horizontal: 18),
+  //               //               shape: RoundedRectangleBorder(
+  //               //                 borderRadius: BorderRadius.circular(18),
+  //               //               ),
+  //               //             ),
+  //               //             child: Text(
+  //               //               "Get Now",
+  //               //               style: TextStyle(
+  //               //                 color: AppData.recommendedProducts[index]
+  //               //                     .buttonTextColor!,
+  //               //               ),
+  //               //             ),
+  //               //           )
+  //               //         ],
+  //               //       ),
+  //               //     ),
+  //               //     const Spacer(),
+  //               //   ],
+  //               // ),
+  //             ),
+  //           );
+  //         }),
+  //   );
+  // }
 
   Widget _topCategoriesHeader(BuildContext context) {
     return Padding(
@@ -167,14 +193,14 @@ class ProductListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hello Sina",
+                  "Hello Steven",
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 Text(
                   "Lets gets somethings?",
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                _recommendedProductListView(context),
+                // _recommendedProductListView(context),
                 _topCategoriesHeader(context),
                 _topCategoriesListView(),
                 GetBuilder(builder: (ProductController controller) {
@@ -190,5 +216,11 @@ class ProductListScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }

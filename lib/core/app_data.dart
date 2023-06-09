@@ -38,7 +38,7 @@ class AppData {
       name: 'GRAMOXONE276SL',
       price: 380,
       about: 'Ini adalah obat pengusir setan',
-      isAvailable: false,
+      isAvailable: true,
       off: null,
       quantity: 0,
       images: [
@@ -55,7 +55,7 @@ class AppData {
       price: 650,
       about: 'obat obat pil',
       isAvailable: true,
-      off: null,
+      off: 250,
       quantity: 0,
       images: [
         'assets/images/nativo.png',
@@ -82,19 +82,19 @@ class AppData {
       rating: 5,
       sizes: ProductSizeType(
         categorical: [
-          Categorical(CategoricalType.small, true),
+          Categorical(CategoricalType.small, false),
           Categorical(CategoricalType.medium, false),
-          Categorical(CategoricalType.large, false),
+          Categorical(CategoricalType.large, true),
         ],
       ),
       type: ProductType.wheat,
     ),
     Product(
       name: 'tractor machine',
-      price: 99999,
+      price: 1500,
       about: 'Tractor bukan sembarang tractor',
       isAvailable: true,
-      off: null,
+      off: 500,
       quantity: 0,
       images: [
         'assets/images/traktor.png',
@@ -103,10 +103,11 @@ class AppData {
       ],
       isFavorite: false,
       rating: 4,
-      sizes: ProductSizeType(
-        numerical: [Numerical('41', true), Numerical('45', false)],
-      ),
       type: ProductType.tools,
+      // sizes: ProductSizeType(
+      //   numerical: [Numerical('41', true), Numerical('45', false)],
+      // ),
+      // type: ProductType.tools,
     ),
     Product(
         name: 'Benih Padi',
@@ -137,21 +138,22 @@ class AppData {
       ],
       isFavorite: false,
       rating: 3,
-      sizes: ProductSizeType(
-        numerical: [
-          Numerical('43', true),
-          Numerical('50', false),
-          Numerical('55', false)
-        ],
-      ),
       type: ProductType.wheat,
+      // sizes: ProductSizeType(
+      //   numerical: [
+      //     Numerical('43', true),
+      //     Numerical('50', false),
+      //     Numerical('55', false)
+      //   ],
+      // ),
+      // type: ProductType.wheat,
     ),
     Product(
       name: ' Skop ',
-      price: 50000,
+      price: 900,
       about: 'Sekop Ajaib yang  bisa menumbuhkan seed dengan instan.',
       isAvailable: true,
-      off: 6000,
+      off: 850,
       quantity: 0,
       images: [
         'assets/images/skop.png',
@@ -159,15 +161,17 @@ class AppData {
         'assets/images/skop.png',
       ],
       isFavorite: false,
-      sizes: ProductSizeType(
-        numerical: [
-          Numerical('50', true),
-          Numerical('65', false),
-          Numerical('85', false)
-        ],
-      ),
       rating: 2,
       type: ProductType.tools,
+      // sizes: ProductSizeType(
+      //   numerical: [
+      //     Numerical('50', true),
+      //     Numerical('65', false),
+      //     Numerical('85', false)
+      //   ],
+      // ),
+      // rating: 2,
+      // type: ProductType.tools,
     ),
   ];
 
