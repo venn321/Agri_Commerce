@@ -1,12 +1,64 @@
+import 'dart:io';
+
 import '../../../faq_page.dart';
 import 'welcome_back_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  // const ProfileScreen({Key? key}) : super(key: key);
 
   @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  String _name = '';
+  late String _imagePath = ' '; //Tambahkan variable _imagePath
+
+  void _updateProfile() {
+    //logika untuk mengirim perubahan data ke db
+
+    //Simulasi Berhasil
+    bool updateSuccess = true;
+
+    if (updateSuccess) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.green),
+                SizedBox(width: 10),
+                Text('Update Berhasil'),
+              ],
+            ),
+            content: Text('Perubahan berhasil Disimpan'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OKEE'))
+            ],
+          );
+        },
+      );
+    } else {}
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final PickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (PickedFile != null) {
+      setState(() {
+        _imagePath = PickedFile.path;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffF9F9F9),
@@ -20,15 +72,13 @@ class ProfileScreen extends StatelessWidget {
               children: <Widget>[
                 CircleAvatar(
                   maxRadius: 48,
-                  backgroundImage: AssetImage('assets/images/profile_pic.png'),
+                  backgroundImage:
+                      _imagePath != null ? FileImage(File(_imagePath)) : null,
+                  child: IconButton(
+                    icon: Icon(Icons.camera_alt),
+                    onPressed: _pickImage,
+                  ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: ElevatedButton.icon(
-                //       onPressed: imageP,
-                //       icon: const Icon(Icons.add_a_photo_sharp),
-                //       label: const Text('Upload Image')),
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(

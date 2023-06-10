@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
     ProductListScreen(),
     FavoriteScreen(),
     CartScreen(),
-    ProfileScreen()
+    //ProfileScreen(),
   ];
 
   @override

@@ -7,13 +7,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController email =
-      TextEditingController(text: 'example@email.com');
-
-  TextEditingController password = TextEditingController(text: '12345678');
-
-  TextEditingController cmfPassword = TextEditingController(text: '12345678');
-
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +43,9 @@ class _RegisterPageState extends State<RegisterPage> {
       bottom: 40,
       child: InkWell(
         onTap: () {
-          Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_) => WelcomeBackPage()));
+          registerUser();
+          // Navigator.of(context)
+          // .push(MaterialPageRoute(builder: (_) => WelcomeBackPage()));
         },
         child: Container(
           width: MediaQuery.of(context).size.width / 2,
@@ -61,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       fontStyle: FontStyle.normal,
                       fontSize: 20.0))),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+              gradient: LinearGradient(
                   colors: [
                     Color.fromARGB(255, 18, 94, 32),
                     Color.fromARGB(255, 18, 94, 32),
@@ -100,22 +97,47 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextField(
-                    controller: email,
+                    controller: usernameController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        prefixIcon:
+                            Icon(Icons.person_outline_rounded, size: 25),
+                        hintText: "Masukkan Nama Anda Disini",
+                        hintStyle: TextStyle(color: Colors.black87),
+                        labelText: "Nama",
+                        labelStyle: TextStyle(color: Colors.black87)),
                     style: TextStyle(fontSize: 16.0),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextField(
-                    controller: password,
+                    controller: emailController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        prefixIcon:
+                            Icon(Icons.person_outline_outlined, size: 30),
+                        hintText: "Masukkan Email Anda Disini",
+                        hintStyle: TextStyle(color: Colors.black87),
+                        labelText: "Email",
+                        labelStyle: TextStyle(color: Colors.black87)),
                     style: TextStyle(fontSize: 16.0),
-                    obscureText: true,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextField(
-                    controller: cmfPassword,
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        prefixIcon: Icon(Icons.password, size: 30),
+                        hintText: "Masukkan Password",
+                        hintStyle: TextStyle(color: Colors.black87),
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.black87)),
                     style: TextStyle(fontSize: 16.0),
                     obscureText: true,
                   ),
@@ -134,7 +156,9 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Text(
             'Mayasari',
             style: TextStyle(
-                fontSize: 12.0, fontStyle: FontStyle.italic, color: Colors.white),
+                fontSize: 12.0,
+                fontStyle: FontStyle.italic,
+                color: Colors.white),
           ),
         ),
         // Widget lainnya
@@ -142,49 +166,50 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(96, 189, 77, 0.698),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 28.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Spacer(flex: 3),
+                title,
+                Spacer(),
+                subTitle,
+                Spacer(flex: 2),
+                registerForm,
+                Spacer(flex: 2),
+                Padding(
+                    padding: EdgeInsets.only(bottom: 20), child: socialRegister)
+              ],
+            ),
+          ),
+          Positioned(
+            top: 35,
+            left: 5,
+            child: IconButton(
+              color: Colors.white,
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
-              body: Stack(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(96, 189, 77, 0.698),
-
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 28.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Spacer(flex:3),
-                        title,
-                        Spacer(),
-
-                        subTitle,
-                        Spacer(flex:2),
-
-                        registerForm,
-                        Spacer(flex:2),
-                        Padding(
-                            padding: EdgeInsets.only(bottom: 20), child: socialRegister)
-                      ],
-                    ),
-                  ),
-
-                  Positioned(
-                    top: 35,
-                    left: 5,
-                    child: IconButton(
-                      color: Colors.white,
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  )
-                ],
-              ),
-            );
+  Future<void> registerUser() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+    String usename = usernameController.text;
   }
 }
