@@ -1,7 +1,7 @@
+import 'package:e_commerce_flutter/api_connection/api_connection.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'register_page.dart';
-
 
 class WelcomeBackPage extends StatefulWidget {
   @override
@@ -9,10 +9,58 @@ class WelcomeBackPage extends StatefulWidget {
 }
 
 class _WelcomeBackPageState extends State<WelcomeBackPage> {
-  TextEditingController email =
-      TextEditingController(text: 'example@email.com');
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  TextEditingController password = TextEditingController(text: '12345678');
+  Future<void> _handleLogin() async {
+    String emailOrUsername = emailController.text;
+    String password = passwordController.text;
+    AuthService authService = AuthService();
+    try {
+      await authService.login(emailOrUsername, password);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(
+                Icons.close,
+                color: Colors.white,
+                size: 40,
+              ),
+              Text(
+                e.toString(),
+                style: TextStyle(fontSize: 8),
+              ),
+            ],
+          ),
+          duration: Duration(seconds: 5),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: Colors.red, width: 2.0),
+          ),
+          backgroundColor: Colors.red,
+          elevation: 5.0,
+          margin: EdgeInsets.all(10.0),
+          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+          action: SnackBarAction(
+            label: 'Dismiss',
+            textColor: Colors.white,
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +90,15 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
         ));
 
     Widget loginButton = Positioned(
-      left: MediaQuery.of(context).size.width / 4,
-      bottom: 40,
+      left: 81.5,
+      right: 81.5,
+      bottom: 18,
       child: InkWell(
         onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => HomeScreen()));
+          _handleLogin();
         },
         child: Container(
-          width: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery.of(context).size.width / 1.5,
           height: 80,
           child: Center(
               child: new Text("Log In",
@@ -81,32 +129,51 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
     );
 
     Widget loginForm = Container(
-      height: 240,
+      height: MediaQuery.of(context).size.height / 3.5,
       child: Stack(
         children: <Widget>[
           Container(
-            height: 160,
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.only(left: 32.0, right: 12.0),
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width / 1.15,
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             decoration: BoxDecoration(
                 color: Color.fromRGBO(255, 255, 255, 0.8),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10))),
+                    bottomLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextField(
-                    controller: email,
+                    controller: emailController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        prefixIcon:
+                            Icon(Icons.person_outline_rounded, size: 25),
+                        hintText: "Masukkan Email Anda Disini",
+                        hintStyle: TextStyle(color: Colors.black87),
+                        labelText: "Email",
+                        labelStyle: TextStyle(color: Colors.black87)),
                     style: TextStyle(fontSize: 16.0),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextField(
-                    controller: password,
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        prefixIcon: Icon(Icons.password_outlined, size: 25),
+                        hintText: "Masukkan Password Disini",
+                        hintStyle: TextStyle(color: Colors.black87),
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.black87)),
                     style: TextStyle(fontSize: 16.0),
                     obscureText: true,
                   ),
@@ -120,44 +187,44 @@ class _WelcomeBackPageState extends State<WelcomeBackPage> {
     );
 
     Widget forgotPassword = Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Tidak punya akun?',
-            style: TextStyle(
-              fontStyle: FontStyle.italic,
-              color: Color.fromRGBO(255, 255, 255, 0.5),
-              fontSize: 14.0,
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => RegisterPage()));
-            },
-            child: Text(
-              'daftar sekarang',
+      padding: const EdgeInsets.only(bottom: 50),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Tidak punya akun?',
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                color: Color.fromRGBO(255, 255, 255, 0.5),
                 fontSize: 14.0,
               ),
             ),
-          ),
-        ],
+            InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => RegisterPage()));
+              },
+              child: Text(
+                'Daftar sekarang',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
 
     return Scaffold(
-
       body: Stack(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-                color: Color.fromRGBO(96, 189, 77, 0.698),
-
+              color: Color.fromRGBO(96, 189, 77, 0.698),
             ),
           ),
           Padding(

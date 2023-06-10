@@ -1,25 +1,26 @@
 import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
+
 import '../../../faq_page.dart';
 import 'welcome_back_page.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
-  // const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String _name = '';
-  late String _imagePath = ' '; //Tambahkan variable _imagePath
-
+  late String _imagePath = '';
+  @override
   void _updateProfile() {
-    //logika untuk mengirim perubahan data ke db
+    //Simulasi logika untuk mengirim perubahan ke database
 
-    //Simulasi Berhasil
+    //simulasi berhasil
     bool updateSuccess = true;
 
     if (updateSuccess) {
@@ -34,18 +35,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text('Update Berhasil'),
               ],
             ),
-            content: Text('Perubahan berhasil Disimpan'),
+            content: Text('Perubahan Berhasil Disimpan'),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OKEE'))
+                  child: Text('OKKKKEEE'))
             ],
           );
         },
       );
-    } else {}
+    } else {
+      // sadagkdgaudasuhkasa
+    }
   }
 
   Future<void> _pickImage() async {
@@ -56,6 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _imagePath = PickedFile.path;
       });
+      //Gunakan pickedImage untuk mengakses path gambar yang mo dipilih
+      //atau juga untuk melakukan operasi lain seperti mengunggah ke server
     }
   }
 
@@ -74,10 +79,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   maxRadius: 48,
                   backgroundImage:
                       _imagePath != null ? FileImage(File(_imagePath)) : null,
-                  child: IconButton(
-                    icon: Icon(Icons.camera_alt),
-                    onPressed: _pickImage,
-                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

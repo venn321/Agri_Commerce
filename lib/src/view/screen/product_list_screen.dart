@@ -5,6 +5,7 @@ import 'package:e_commerce_flutter/core/app_color.dart';
 import 'package:e_commerce_flutter/src/controller/product_controller.dart';
 import 'package:e_commerce_flutter/src/view/widget/product_grid_view.dart';
 import 'package:e_commerce_flutter/src/view/widget/list_item_selector.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum AppbarActionType { leading, trailing }
 
@@ -20,8 +21,25 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
+  String greeting = '';
   TextEditingController searchController = TextEditingController();
   bool searchState = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserFromSharedPreferences();
+  }
+
+  Future<void> getUserFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userName = prefs.getString('user_name');
+    final userEmail = prefs.getString('user_email');
+    setState(() {
+      greeting = 'Hello $userName ($userEmail)';
+    });
+  }
+
   Widget appBarActionButton(AppbarActionType type) {
     IconData icon = Icons.search;
 
@@ -193,11 +211,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hello Steven",
+                  greeting,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 Text(
-                  "Lets gets somethings?",
+                  "Sedang Mencari Barang ?",
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 // _recommendedProductListView(context),
